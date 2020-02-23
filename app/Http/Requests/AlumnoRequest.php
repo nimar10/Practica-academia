@@ -28,7 +28,7 @@ class AlumnoRequest extends FormRequest
             'nombre' => ['required'],
             'apellidos' => ['required'],
             'mail' => ['required', 'unique:alumnos,mail'],
-            'logo' => ['nullable', 'image']
+            'logo' => [ 'image', 'nullable']
 
         ];
     }

@@ -11,6 +11,21 @@ Alumnos S.A.
 @endif
 
 <a href="{{route('alumnos.create')}}" class="btn btn-success mt-3 ml-2">Crear Alumno</a>
+<form name="search" method="GET" action="{{route('alumnos.index')}}" class="form-inline float-right">
+ <label>Modulos:</label>
+  <select name="modulos" class="form-control mx-2 float-left" onchange="this.form.submit()">
+    <option value="%">Todos</option>
+    <option value="-1">Sin Matricular</option>
+    @foreach($modulos as $modulo)
+      @if($modulo->id==$request->modulo_id)
+        <option value='{{$modulo->id}}' selected>{{$modulo->nombre}}</option>
+      @else
+      <option value="{{$modulo->id}}" >{{$modulo->nombre}}</option>
+      @endif
+    @endforeach
+  </select>
+  <input type="submit" value="Buscar" class="btn btn-info ml-2">
+</form>
 <table class="table mt-3" border="3">
     <thead class="thead-dark">
       <tr>
@@ -47,5 +62,5 @@ Alumnos S.A.
         @endforeach
     </tbody>
   </table>
-  {{$alumnos->links()}}
+  {{$alumnos->appends(Request::except('page'))->links()}}
 @endsection

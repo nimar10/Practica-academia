@@ -32,11 +32,12 @@ Detalles AlumnosS.A.
                     <p class="font-weight-bold ml-3">Modulos: </p>
                         <ul>
                             @foreach ($alumno->modulos as $modulo)
-                            <li>{{$modulo->nombre. "(".$modulo->pivot->nota.")"}}</li>
+                            <ol>{{$modulo->nombre. "(".$modulo->pivot->nota.")"}}</ol>
                                 
                             @endforeach
 
                         <p class="font-weight-bold ml-3">Nota Media:  </p>
+                        
                         </ul>
                 </td>
                 <td>

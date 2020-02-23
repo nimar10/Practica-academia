@@ -14,6 +14,8 @@ class Alumno extends Model
         return $this->belongsToMany('App\Modulo')->withPivot('nota')->withTimestamps();
     }
 
+  
+
     public function modulosOut(){
          // esto me devuelve los ids de los modulos que tiene ese alumno
          $modulos1=$this->modulos()->pluck('modulos.id');
@@ -36,12 +38,22 @@ class Alumno extends Model
         return "Sin modulos";
         
     }
+    public function scopeModulo_id($query, $v){
+    
+        if($v=='%'){
+            return $query->where('modulo_id','like', $v)
+            ->orWhereNull('modulo_id');
+    }
+
+        if($v==-1){
+            return $query->whereNull('modulo_id');
+        }
+        if(!isset($v)){
+            return $query->where('modulo_id', 'like','%')
+            ->orWhereNull('modulo_id');
+        }
+        return $query('modulo_id',$v);
+    }
 }
 
-//     public function scope_Modulo($query, $v){
 
-//         if($v=='%'){
-//             return $query->where('modulo_nombre','like', $v)
-//             ->orwhereNull('modulo_nombre');
-//     }
-// }

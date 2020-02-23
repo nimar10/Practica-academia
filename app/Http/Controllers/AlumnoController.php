@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use AlumnoModulo;
 use App\Alumno;
 use Illuminate\Http\Request;
 use App\Modulo;
@@ -17,12 +18,12 @@ class AlumnoController extends Controller
      */
     public function index(Request $request)
     {
-        
-        // $miModulo=$request->get('modulo_nombre');
+      $modulos=Modulo::orderBy('nombre')->get();
+     
         $alumnos=Alumno::orderBy('apellidos')
-        // ->modulo_nombre($miModulo)
-        ->paginate(5);
-        return view('alumnos.index', compact('alumnos'));
+        
+        ->paginate(3);
+        return view('alumnos.index', compact('alumnos','modulos','request'));
     }
 
     public function fmatricula(Alumno $alumno){
@@ -84,7 +85,9 @@ class AlumnoController extends Controller
      */
     public function store(AlumnoRequest $request ) {
         //validaciones genericas
+
       $datos=$request->validated();
+      
       
         // dd($datos);
         //cojo los datos por que voy a modificar el request
@@ -97,7 +100,7 @@ class AlumnoController extends Controller
         
 
         //Compr0obamos si hemos subido un logo
-        if($datos['logo']!=null){
+        if(isset($datos['logo'])&& $datos['logo']!=null){
             
             $file=$datos['logo']; //metemos foto en una variable (yo me entiendo)
             
