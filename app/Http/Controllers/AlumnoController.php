@@ -21,7 +21,6 @@ class AlumnoController extends Controller
       $modulos=Modulo::orderBy('nombre')->get();
      
         $alumnos=Alumno::orderBy('apellidos')
-        
         ->paginate(3);
         return view('alumnos.index', compact('alumnos','modulos','request'));
     }

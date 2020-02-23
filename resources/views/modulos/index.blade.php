@@ -12,7 +12,21 @@ Modulos S.A.
 @endif
 
 <a href="{{route('modulos.create')}}" class="btn btn-success mb-3 ">Crear Modulos</a>
-
+<form name="search" method="GET" action="{{route('modulos.index')}}" class="form-inline float-right">
+ <label>Alumnos:</label>
+  <select name="alumnos" class="form-control mx-2 float-left" onchange="this.form.submit()">
+    <option value="%">Todos</option>
+    <option value="-1">Sin Modulo</option>
+    @foreach($alumnos as $alumno)
+      @if($alumno->id==$request->alumno_id)
+        <option value='{{$alumno->id}}' selected>{{$alumno->nombre}}</option>
+      @else
+      <option value="{{$alumno->id}}" >{{$alumno->nombre}}</option>
+      @endif
+    @endforeach
+  </select>
+  <input type="submit" value="Buscar" class="btn btn-info ml-2">
+</form>
 <table class="table">
     <thead class="thead-dark">
       <tr>

@@ -13,4 +13,21 @@ class Modulo extends Model
        return $this->belongsToMany('App\Alumno')->withPivot('nota')->withTimestamps();
        
     }
+
+    public function scopeAlumno_id($query, $v){
+    
+        if($v=='%'){
+            return $query->where('alumno_id','like', $v)
+            ->orWhereNull('alumno_id');
+    }
+
+        if($v==-1){
+            return $query->whereNull('alumno_id');
+        }
+        if(!isset($v)){
+            return $query->where('alumno_id', 'like','%')
+            ->orWhereNull('alumno_id');
+        }
+        return $query('alumno_id',$v);
+    }
 }

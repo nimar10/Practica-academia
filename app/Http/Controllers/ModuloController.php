@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Modulo;
 use Illuminate\Http\Request;
-
+use App\Alumno;
 class ModuloController extends Controller
 {
     /**
@@ -12,11 +12,13 @@ class ModuloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $alumnos=Alumno::orderBy('nombre')->get();
+
         $modulos=Modulo::orderBy('nombre')
         ->paginate(3);
-        return view('modulos.index', compact('modulos'));
+        return view('modulos.index', compact('modulos','alumnos','request'));
     }
 
     /**
